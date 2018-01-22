@@ -12,5 +12,5 @@ import java.io.Serializable;
  * @author Morat
  */
 public enum Notification implements Serializable {
-	QUERY_PRINT, REPLY_PRINT_OK;
+	QUERY_PRINT, REPLY_PRINT_OK, REPLY_UNKNOWN_NOTIFICATION, REPLY_UNKNOWN_ERROR;
 }
