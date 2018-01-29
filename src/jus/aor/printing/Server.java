@@ -55,12 +55,18 @@ public class Server {
 			Notification protocole = null;
 			JobKey jk = null;
 			log.log(Level.INFO_1, "Server.TCP.Started", new Object[] { port, backlog });
+			log.log(Level.INFO_1,"Server started.");
 			while (alive) {
 				log.log(Level.INFO, "Server.TCP.Waiting");
 				try {
 					soc = serverTCPSoc.accept();
+					log.log(Level.INFO_1,"Client " + soc.getInetAddress() + " connected");
+					log.log(Level.INFO_1,"Lecture du protocole...");
 					protocole = TCP.readProtocole(soc);
+					log.log(Level.INFO_1,"Protocole lu : " + protocole);
+					log.log(Level.INFO_1,"Lecture de la JobKey...");
 					jk = TCP.readJobKey(soc);
+					log.log(Level.INFO_1,"JobKey lue : " + jk);
 					if(protocole == QUERY_PRINT) {
 						TCP.writeProtocole(soc, REPLY_PRINT_OK);
 						TCP.writeJobKey(soc, jk);
@@ -108,16 +114,19 @@ public class Server {
 	 * 
 	 */
 	void start() {
-		// ----------------------------------------------------------------------
-		// A COMPLETER
+		alive = true;
+		new Thread() {
+			public void run() {
+				runTCP();
+			}
+		}.start();
 	}
 
 	/**
 	 * 
 	 */
 	public void stop() {
-		// ----------------------------------------------------------------------
-		// A COMPLETER
+		alive = false;
 	}
 
 	/**

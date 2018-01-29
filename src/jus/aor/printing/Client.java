@@ -107,10 +107,15 @@ public class Client {
 		try (InputStream fis = new FileInputStream(f)) {
 			Notification ret;
 			soc = new Socket("127.0.0.1", 3000);
+			log.log(Level.INFO_2, "Connected to " + soc.getInetAddress());
+			log.log(Level.INFO_2, "Ecriture de Notification " + Notification.QUERY_PRINT + "et JobKey " + jk + "...");
 			TCP.writeProtocole(soc, Notification.QUERY_PRINT);
 			TCP.writeJobKey(soc, jk);
+			log.log(Level.INFO_2, "Done");
+			log.log(Level.INFO_2, "Lecture de notification...");
 			ret = TCP.readProtocole(soc);
-			if(jk != TCP.readJobKey(soc))
+			log.log(Level.INFO_2, "Notification lue : " + ret);
+			if (jk != TCP.readJobKey(soc))
 				throw new Exception("JobKey incorrecte");
 
 			if (ret == REPLY_PRINT_OK) {
@@ -143,8 +148,12 @@ public class Client {
 	 *            nombre de requêtes d'impression à faire
 	 */
 	public void queryPrint(final File f, int n) {
-		for(int i=0; i<n; i++)
-			onePrint(f);
+		for (int i = 0; i < n; i++)
+			new Thread() {
+				public void run() {
+					onePrint(f);
+				}
+			}.start();
 	}
 
 	/**
