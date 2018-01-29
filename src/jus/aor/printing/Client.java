@@ -1,20 +1,14 @@
 package jus.aor.printing;
 
-import java.net.*;
+import static jus.aor.printing.Notification.REPLY_PRINT_OK;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.logging.Logger;
-import java.io.*;
-
-import jus.aor.printing.Client;
-import jus.aor.printing.JobKey;
-import jus.aor.printing.JobState;
-import jus.aor.printing.Level;
-import jus.aor.printing.Notification;
-import jus.aor.printing.Paire;
-import jus.aor.printing.ServerStatus;
-import jus.aor.printing.TCP;
-import jus.aor.printing.UDP;
-
-import static jus.aor.printing.Notification.*;
 
 /**
  * Représentation du Client du serveur d'impression.
@@ -113,12 +107,12 @@ public class Client {
 		try (InputStream fis = new FileInputStream(f)) {
 			Notification ret;
 			soc = new Socket("127.0.0.1", 3000);
-			TCP.writeProtocole(soc, QUERY_PRINT);
+			TCP.writeProtocole(soc, Notification.QUERY_PRINT);
 			TCP.writeJobKey(soc, jk);
 			ret = TCP.readProtocole(soc);
 			if(jk != TCP.readJobKey(soc))
 				throw new Exception("JobKey incorrecte");
-			
+
 			if (ret == REPLY_PRINT_OK) {
 				// ------------------------------------------------------------------------
 				// A COMPLETER

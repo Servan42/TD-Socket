@@ -32,6 +32,7 @@ public class Server {
 	protected ServerSocket serverTCPSoc;
 	/** le logger du server */
 	Logger log = Logger.getLogger("Jus.Aor.Printing.Server", "jus.aor.printing.Server");
+	protected Spooler spooler;
 
 	/**
 	 * Construction du server d'impression

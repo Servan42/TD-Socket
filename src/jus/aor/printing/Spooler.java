@@ -36,6 +36,7 @@ public class Spooler extends Thread {
 	protected SpoolerGUI GUI = null;
 	/** le logger du spooler */
 	protected Logger log = Logger.getLogger("Jus.Aor.Printing.Spooler", "jus.aor.printing.Spooler");
+	protected Formule impressionTimeOfSize;
 
 	/**
 	 * La création du spooler
