@@ -4,6 +4,7 @@
 package jus.aor.printing;
 
 import java.lang.management.ManagementFactory;
+import java.nio.ByteBuffer;
 import java.util.Date;
 
 /**
@@ -19,6 +20,9 @@ public class JobKey {
 	/** la date */
 	public long date;
 
+	/** Un buffer de codage/decodage de la cle */
+    private static ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);    
+	
 	/**
 	 * construit un JobKey
 	 */
@@ -45,11 +49,9 @@ public class JobKey {
 	 *            le tableau de bytes de la forme textuelle
 	 */
 	public JobKey(byte[] marshal) {
-		String str = marshal.toString();
-		Long tst = Long.valueOf(str);
-		Date thing = new Date(tst);
-		long date = thing.getTime();
-		this.date = date;
+		buffer.put(marshal, 0, marshal.length);
+		buffer.flip();
+		this.date = buffer.getLong();
 	}
 
 	/**
@@ -58,7 +60,8 @@ public class JobKey {
 	 * @return le tableau de bytes de la forme textuelle
 	 */
 	public byte[] marshal() {
-		return new Date(date).toString().getBytes();
+		buffer.putLong(0, date);
+		return buffer.array();
 	}
 
 	/**
