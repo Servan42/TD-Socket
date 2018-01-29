@@ -115,7 +115,7 @@ public class Client {
 			log.log(Level.INFO_2, "Lecture de notification...");
 			ret = TCP.readProtocole(soc);
 			log.log(Level.INFO_2, "Notification lue : " + ret);
-			if (jk.equals(TCP.readJobKey(soc)))
+			if (!TCP.readJobKey(soc).equals(jk))
 				throw new Exception("JobKey incorrecte");
 
 			if (ret == REPLY_PRINT_OK) {

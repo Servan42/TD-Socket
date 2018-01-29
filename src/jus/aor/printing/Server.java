@@ -81,6 +81,7 @@ public class Server {
 				} catch (Exception e) {
 					TCP.writeProtocole(soc, REPLY_UNKNOWN_ERROR);
 				}
+				alive = false;
 			}
 			log.log(Level.INFO_1, "Server.TCP.Stopped");
 			serverTCPSoc.close();

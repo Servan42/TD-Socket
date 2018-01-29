@@ -51,6 +51,7 @@ public class JobKey {
 	public JobKey(byte[] marshal) {
 		buffer.put(marshal, 0, marshal.length);
 		buffer.flip();
+		this.serverId = ManagementFactory.getRuntimeMXBean().getName();
 		this.date = buffer.getLong();
 	}
 
@@ -84,7 +85,7 @@ public class JobKey {
 		if (!(other instanceof JobKey))
 			return false;
 		JobKey o = (JobKey) other;
-		if (!serverId.equals(o.serverId))
+		if (serverId != null && o.serverId != null && !serverId.equals(o.serverId))
 			return false;
 		if (o.date == 0)
 			return true;
