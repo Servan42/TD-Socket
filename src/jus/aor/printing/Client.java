@@ -108,7 +108,7 @@ public class Client {
 			Notification ret;
 			soc = new Socket("127.0.0.1", 3000);
 			log.log(Level.INFO_2, "Connected to " + soc.getInetAddress());
-			log.log(Level.INFO_2, "Ecriture de Notification " + Notification.QUERY_PRINT + "et JobKey " + jk + "...");
+			log.log(Level.INFO_2, "Ecriture de Notification " + Notification.QUERY_PRINT + " et JobKey " + jk.toString() + " ...");
 			TCP.writeProtocole(soc, Notification.QUERY_PRINT);
 			TCP.writeJobKey(soc, jk);
 			log.log(Level.INFO_2, "Done");

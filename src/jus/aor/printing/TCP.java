@@ -80,7 +80,8 @@ class TCP {
 		while(size < length){
 			size = dis.read(b, 0, length);
 		}
-		return new JobKey(b);
+		JobKey jk = new JobKey(b);
+		return jk;
 	}
 
 	/**
