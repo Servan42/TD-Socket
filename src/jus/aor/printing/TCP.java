@@ -57,8 +57,11 @@ class TCP {
 	 * @throws IOException
 	 */
 	static void writeJobKey(Socket soc, JobKey key) throws IOException {
-		// -----------------------------------------------------------------------------
-		// A COMPLETER
+		OutputStream os = soc.getOutputStream();
+		DataOutputStream dos = new DataOutputStream(os);
+		byte[] b = key.marshal();
+		dos.writeInt(b.length);
+		dos.write(b);
 	}
 
 	/**
@@ -69,10 +72,15 @@ class TCP {
 	 * @throws IOException
 	 */
 	static JobKey readJobKey(Socket soc) throws IOException {
-		// -----------------------------------------------------------------------------
-		// A COMPLETER
-		System.out.println("NOT IMPLEMENTED YET");
-		return null;
+		InputStream is = soc.getInputStream();
+		DataInputStream dis = new DataInputStream(is);
+		int length = dis.readInt();
+		byte[] b = new byte[length];
+		int size = 0;
+		while(size < length){
+			size = dis.read(b, 0, length);
+		}
+		return new JobKey(b);
 	}
 
 	/**
