@@ -61,7 +61,7 @@ public class Server {
 					soc = serverTCPSoc.accept();
 					protocole = TCP.readProtocole(soc);
 					jk = TCP.readJobKey(soc);
-					if(protocole.equals(Notification.QUERY_PRINT)) {
+					if(protocole == QUERY_PRINT) {
 						TCP.writeProtocole(soc, REPLY_PRINT_OK);
 						TCP.writeJobKey(soc, jk);
 					} else {
