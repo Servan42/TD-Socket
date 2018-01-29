@@ -67,7 +67,7 @@ public class Server {
 					System.out.println("Lecture de la JobKey...");
 					jk = TCP.readJobKey(soc);
 					System.out.println("JobKey lue : " + jk);
-					if (protocole.equals(Notification.QUERY_PRINT)) {
+					if(protocole == QUERY_PRINT) {
 						TCP.writeProtocole(soc, REPLY_PRINT_OK);
 						TCP.writeJobKey(soc, jk);
 					} else {

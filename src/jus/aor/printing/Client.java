@@ -148,8 +148,8 @@ public class Client {
 	 *            nombre de requêtes d'impression à faire
 	 */
 	public void queryPrint(final File f, int n) {
-		// --------------------------------------------------------------------------
-		// A COMPLETER
+		for(int i=0; i<n; i++)
+			onePrint(f);
 	}
 
 	/**
