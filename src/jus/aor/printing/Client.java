@@ -109,10 +109,16 @@ public class Client {
 	 */
 	private void onePrint(File f) {
 		Socket soc = null;
+		JobKey jk = new JobKey();
 		try (InputStream fis = new FileInputStream(f)) {
 			Notification ret;
-			// --------------------------------------------------------------------------
-			// A COMPLETER
+			soc = new Socket("127.0.0.1", 3000);
+			TCP.writeProtocole(soc, QUERY_PRINT);
+			TCP.writeJobKey(soc, jk);
+			ret = TCP.readProtocole(soc);
+			if(jk != TCP.readJobKey(soc))
+				throw new Exception("JobKey incorrecte");
+			
 			if (ret == REPLY_PRINT_OK) {
 				// ------------------------------------------------------------------------
 				// A COMPLETER
@@ -128,6 +134,8 @@ public class Client {
 			log.log(Level.SEVERE, "Client.QueryPrint.Remote.Error", e.getMessage());
 		} catch (IOException e) {
 			log.log(Level.SEVERE, "Client.QueryPrint.IO.Error", e.getMessage());
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "Client.Jobkey.Incorrect", e.getMessage());
 		}
 	}
 

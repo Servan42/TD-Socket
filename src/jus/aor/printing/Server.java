@@ -52,8 +52,8 @@ public class Server {
 			while (alive) {
 				log.log(Level.INFO, "Server.TCP.Waiting");
 				try {
-					// ----------------------------------------------------------------------
-					// A COMPLETER
+					soc = serverTCPSoc.accept();
+					protocole = TCP.readProtocole(soc);
 				} catch (SocketException e) {
 					// socket has been closed, master serverTCP will stop.
 				} catch (ArrayIndexOutOfBoundsException e) {

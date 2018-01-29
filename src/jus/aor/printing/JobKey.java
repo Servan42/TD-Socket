@@ -45,8 +45,7 @@ public class JobKey {
 	 *            le tableau de bytes de la forme textuelle
 	 */
 	public JobKey(byte[] marshal) {
-		// -----------------------------------------------------------------------------
-		// A COMPLETER
+		
 	}
 
 	/**
