@@ -45,7 +45,8 @@ public class JobKey {
 	 *            le tableau de bytes de la forme textuelle
 	 */
 	public JobKey(byte[] marshal) {
-		this.date = new Date(Long.valueOf(new String(marshal))).getTime();
+		long date = new Date(Long.valueOf(new String(marshal))).getTime();
+		this.date = date;
 	}
 
 	/**
