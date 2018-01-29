@@ -45,7 +45,7 @@ public class JobKey {
 	 *            le tableau de bytes de la forme textuelle
 	 */
 	public JobKey(byte[] marshal) {
-		
+		this.date = new Date(new String(marshal));
 	}
 
 	/**
@@ -54,10 +54,8 @@ public class JobKey {
 	 * @return le tableau de bytes de la forme textuelle
 	 */
 	public byte[] marshal() {
-		// -----------------------------------------------------------------------------
-		// A COMPLETER
 		System.out.println("NOT IMPLEMENTED YET");
-		return null;
+		return new Date(date).toString().getBytes();
 	}
 
 	/**

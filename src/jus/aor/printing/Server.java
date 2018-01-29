@@ -39,6 +39,11 @@ public class Server {
 	 */
 	public Server() {
 		log.setLevel(Level.INFO_1);
+		try {
+			serverTCPSoc = new ServerSocket(port, backlog);
+		} catch (IOException e) {
+			log.log(Level.SEVERE, "Server.Creation.Error", e.getMessage());
+		}
 	}
 
 	/**
@@ -47,16 +52,24 @@ public class Server {
 	private void runTCP() {
 		try {
 			Socket soc = null;
-			serverTCPSoc = new ServerSocket(port, backlog);
 			Notification protocole = null;
+			JobKey jk = null;
 			log.log(Level.INFO_1, "Server.TCP.Started", new Object[] { port, backlog });
 			while (alive) {
 				log.log(Level.INFO, "Server.TCP.Waiting");
 				try {
 					soc = serverTCPSoc.accept();
 					protocole = TCP.readProtocole(soc);
+					jk = TCP.readJobKey(soc);
+					if(protocole.equals(Notification.QUERY_PRINT)) {
+						TCP.writeProtocole(soc, REPLY_PRINT_OK);
+						TCP.writeJobKey(soc, jk);
+					} else {
+						TCP.writeProtocole(soc, REPLY_UNKNOWN_NOTIFICATION);
+						TCP.writeJobKey(soc, jk);
+					}
 				} catch (SocketException e) {
-					// socket has been closed, master serverTCP will stop.
+					log.log(Level.SEVERE, "Server.MasterSocket.Closed", e.getMessage());
 				} catch (ArrayIndexOutOfBoundsException e) {
 					TCP.writeProtocole(soc, REPLY_UNKNOWN_NOTIFICATION);
 				} catch (Exception e) {
