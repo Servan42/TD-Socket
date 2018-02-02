@@ -6,7 +6,7 @@ import java.net.*;
 import java.util.*;
 import java.util.logging.Logger;
 
-import jus.aor.printing.Esclave.Slave;
+import jus.aor.printing.Slave;
 import jus.util.Formule;
 
 import static jus.aor.printing.Notification.*;
@@ -52,36 +52,16 @@ public class Server {
 	private void runTCP() {
 		try {
 			Socket soc = null;
+
 			Notification protocole = null;
 			JobKey jk = null;
+
 			log.log(Level.INFO_1, "Server.TCP.Started", new Object[] { port, backlog });
-			log.log(Level.INFO_1,"Server started.");
+			log.log(Level.INFO_1, "Server started.");
 			while (alive) {
 				log.log(Level.INFO, "Server.TCP.Waiting");
-				try {
-					soc = serverTCPSoc.accept();
-					log.log(Level.INFO_1,"Client " + soc.getInetAddress() + " connected");
-					log.log(Level.INFO_1,"Lecture du protocole...");
-					protocole = TCP.readProtocole(soc);
-					log.log(Level.INFO_1,"Protocole lu : " + protocole);
-					log.log(Level.INFO_1,"Lecture de la JobKey...");
-					jk = TCP.readJobKey(soc);
-					log.log(Level.INFO_1,"JobKey lue : " + jk);
-					if(protocole == QUERY_PRINT) {
-						TCP.writeProtocole(soc, REPLY_PRINT_OK);
-						TCP.writeJobKey(soc, jk);
-					} else {
-						TCP.writeProtocole(soc, REPLY_UNKNOWN_NOTIFICATION);
-						TCP.writeJobKey(soc, jk);
-					}
-				} catch (SocketException e) {
-					log.log(Level.SEVERE, "Server.MasterSocket.Closed", e.getMessage());
-				} catch (ArrayIndexOutOfBoundsException e) {
-					TCP.writeProtocole(soc, REPLY_UNKNOWN_NOTIFICATION);
-				} catch (Exception e) {
-					System.out.println(e.toString());
-					TCP.writeProtocole(soc, REPLY_UNKNOWN_ERROR);
-				}
+				soc = serverTCPSoc.accept();
+				new Slave(soc).start();
 			}
 			log.log(Level.INFO_1, "Server.TCP.Stopped");
 			serverTCPSoc.close();

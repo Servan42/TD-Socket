@@ -32,10 +32,14 @@ public class Client {
 
 			// Read the data from input stream
 			byte[] b = new byte[length];
-			int num = 0;
-			while (num < length) {
-				num = dis.read(b, 0, length);
-			}
+			dis.readFully(b, 0, length);
+
+			/*
+			 * Or use this method : 
+			 * int size = 0; 
+			 * while(size < length){ 
+			 * size = size + dis.read(b, size, length-size); }
+			 */
 
 			// Transform data from bytes to String
 			String date = new String(b);
@@ -46,17 +50,9 @@ public class Client {
 			is.close();
 			dis.close();
 
-			is = server.getInputStream();
-			ObjectInputStream ois = new ObjectInputStream(is);
-			Date dateObject = (Date) ois.readObject();
-			System.out.println("Server said (object) : " + dateObject);
-			ois.close();
-
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

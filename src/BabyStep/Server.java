@@ -54,13 +54,6 @@ public class Server {
 				os.close();
 				dos.close();
 
-				// Creer une methode lancer objet et recommencer avec les trucs
-				// ci dessous
-				os = client.getOutputStream();
-				ObjectOutputStream oos = new ObjectOutputStream(os);
-				oos.writeObject(date);
-				oos.close();
-
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
