@@ -77,6 +77,7 @@ public class Server {
 				} catch (SocketException e) {
 					log.log(Level.SEVERE, "Server.MasterSocket.Closed", e.getMessage());
 				} catch (ArrayIndexOutOfBoundsException e) {
+					e.printStackTrace();
 					TCP.writeProtocole(soc, REPLY_UNKNOWN_NOTIFICATION);
 				} catch (Exception e) {
 					System.out.println(e.toString());

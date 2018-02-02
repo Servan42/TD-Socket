@@ -18,10 +18,7 @@ public class JobKey {
 	/** l'identification de la jvm */
 	public String serverId;
 	/** la date */
-	public long date;
-
-	/** Un buffer de codage/decodage de la cle */
-    private static ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);    
+	public long date;  
 	
 	/**
 	 * construit un JobKey
@@ -49,10 +46,9 @@ public class JobKey {
 	 *            le tableau de bytes de la forme textuelle
 	 */
 	public JobKey(byte[] marshal) {
-		buffer.put(marshal, 0, marshal.length);
-		buffer.flip();
-		buffer.clear();
-		this.date = buffer.getLong();
+		String[] strings = (new String(marshal)).split("¤");
+		this.serverId = strings[0];
+		this.date = Long.valueOf(strings[1]);
 	}
 
 	/**
@@ -61,9 +57,9 @@ public class JobKey {
 	 * @return le tableau de bytes de la forme textuelle
 	 */
 	public byte[] marshal() {
-		buffer.putLong(0, date);
-		buffer.clear();
-		return buffer.array();
+		byte[] buff = new byte[1000];
+		buff = toString().getBytes();
+		return buff;
 	}
 
 	/**
