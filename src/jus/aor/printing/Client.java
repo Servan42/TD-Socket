@@ -134,6 +134,7 @@ public class Client {
 		} catch (IOException e) {
 			log.log(Level.SEVERE, "Client.QueryPrint.IO.Error", e.getMessage());
 		} catch (Exception e) {
+			System.out.println(e.toString());
 			log.log(Level.SEVERE, "Client.Jobkey.Incorrect", e.getMessage());
 		}
 	}
