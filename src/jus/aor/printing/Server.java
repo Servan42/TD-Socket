@@ -18,7 +18,7 @@ import static jus.aor.printing.Notification.*;
  */
 public class Server {
 	/** 1 second timeout for waiting replies */
-	protected static final int TIMEOUT = 1000;
+	protected static final int TIMEOUT = 1000000000;
 	protected static final int MAX_REPONSE_LEN = 1024;
 	/** la taille de la temporisation */
 	protected int backlog = 10;
@@ -79,9 +79,9 @@ public class Server {
 				} catch (ArrayIndexOutOfBoundsException e) {
 					TCP.writeProtocole(soc, REPLY_UNKNOWN_NOTIFICATION);
 				} catch (Exception e) {
+					System.out.println(e.toString());
 					TCP.writeProtocole(soc, REPLY_UNKNOWN_ERROR);
 				}
-				alive = false;
 			}
 			log.log(Level.INFO_1, "Server.TCP.Stopped");
 			serverTCPSoc.close();

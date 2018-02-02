@@ -51,7 +51,7 @@ public class JobKey {
 	public JobKey(byte[] marshal) {
 		buffer.put(marshal, 0, marshal.length);
 		buffer.flip();
-		this.serverId = ManagementFactory.getRuntimeMXBean().getName();
+		buffer.clear();
 		this.date = buffer.getLong();
 	}
 
@@ -62,6 +62,7 @@ public class JobKey {
 	 */
 	public byte[] marshal() {
 		buffer.putLong(0, date);
+		buffer.clear();
 		return buffer.array();
 	}
 

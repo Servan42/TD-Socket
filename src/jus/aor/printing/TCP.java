@@ -78,10 +78,9 @@ class TCP {
 		byte[] b = new byte[length];
 		int size = 0;
 		while(size < length){
-			size = dis.read(b, 0, length);
+			size = size + dis.read(b, size, length-size);
 		}
-		JobKey jk = new JobKey(b);
-		return jk;
+		return new JobKey(b);
 	}
 
 	/**
