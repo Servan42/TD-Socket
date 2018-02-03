@@ -101,17 +101,17 @@ class TCP {
 		DataInputStream dfis = new DataInputStream(fis);
 		byte[] b = new byte[MAX_LEN_BUFFER];
 		/* Sending the file kbyte per kbyte */
-		int offset=0;
+		int offset = 0;
 		dos.writeInt(len);
-		for(offset=0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
+		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
 			dfis.readFully(b, offset, MAX_LEN_BUFFER);
-//			dos.writeInt(b.length);
+			// dos.writeInt(b.length);
 			dos.write(b);
 		}
 		/* Sending the end of the file */
 		byte[] b2 = new byte[len];
 		dfis.readFully(b2, offset, len);
-//		dos.writeInt(b.length);
+		// dos.writeInt(b.length);
 		dos.write(b2);
 	}
 
