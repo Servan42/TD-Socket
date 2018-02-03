@@ -91,7 +91,7 @@ class TCP {
 	 * @param fis
 	 *            the input stream ti transfert
 	 * @param len
-	 *            th len of the input stream
+	 *            the len of the input stream
 	 * @throws IOException
 	 */
 	static void writeData(Socket soc, InputStream fis, int len) throws IOException {
@@ -103,12 +103,19 @@ class TCP {
 		/* Sending the file kbyte per kbyte */
 		int offset = 0;
 		dos.writeInt(len);
-		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
-			dfis.readFully(b, offset, MAX_LEN_BUFFER);
-			// dos.writeInt(b.length);
-			dos.write(b);
+//		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
+		while(len <= MAX_LEN_BUFFER) {
+			if(fis.available() >= MAX_LEN_BUFFER) {
+				dfis.readFully(b, offset, MAX_LEN_BUFFER);
+				// dos.writeInt(b.length);
+				dos.write(b);
+				offset += MAX_LEN_BUFFER;
+				len -= MAX_LEN_BUFFER;
+			}
 		}
+//		}
 		/* Sending the end of the file */
+		while(fis.available() < len);
 		byte[] b2 = new byte[len];
 		dfis.readFully(b2, offset, len);
 		// dos.writeInt(b.length);
