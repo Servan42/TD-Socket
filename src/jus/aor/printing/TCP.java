@@ -91,7 +91,7 @@ class TCP {
 	 * @param fis
 	 *            the input stream ti transfert
 	 * @param len
-	 *            th len of the input stream
+	 *            the len of the input stream
 	 * @throws IOException
 	 */
 	static void writeData(Socket soc, InputStream fis, int len) throws IOException {
@@ -103,21 +103,24 @@ class TCP {
 		/* Sending the file kbyte per kbyte */
 		int offset = 0;
 		dos.writeInt(len);
-		System.out.println("Taille du fichier à envoyer : " + len);
-		
-		
-		
-		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
-//			DataInputStream dfis = new DataInputStream(fis);
-			System.out.println("Lecture du paquet " + offset/MAX_LEN_BUFFER);
-			dfis.readFully(b, offset, MAX_LEN_BUFFER);
-			System.out.println("Paquet " + offset/MAX_LEN_BUFFER + " Lu : ");
-			System.out.println(new String(b));
-			// dos.writeInt(b.length);
-			dos.write(b);
+System.out.println("Taille du fichier à envoyer : " + len);
+//		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
+		while(len <= MAX_LEN_BUFFER) {
+			if(fis.available() >= MAX_LEN_BUFFER) {
+				System.out.println("Lecture du paquet " + offset/MAX_LEN_BUFFER);
+				dfis.readFully(b, offset, MAX_LEN_BUFFER);
+				System.out.println("Paquet " + offset/MAX_LEN_BUFFER + " lu : ");
+				System.out.println(new String(b));
+				// dos.writeInt(b.length);
+				dos.write(b);
+				offset += MAX_LEN_BUFFER;
+				len -= MAX_LEN_BUFFER;
+			}
 		}
-//		DataInputStream dfis = new DataInputStream(fis);
+
+//		}
 		/* Sending the end of the file */
+		while(fis.available() < len);
 		byte[] b2 = new byte[len];
 		dfis.readFully(b2, offset, len);
 		// dos.writeInt(b.length);
