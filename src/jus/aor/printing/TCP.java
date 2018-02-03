@@ -137,7 +137,7 @@ class TCP {
 		// Buffer limit not implemented yet
 		DataInputStream dis = new DataInputStream(soc.getInputStream());
 		int len = dis.readInt();
-		System.out.println("YOPOOOOOOOOOOOOOOOOOOOOOO" + len);
+		System.out.println("Taille du fichier à recevoir : " + len);
 		byte[] b = new byte[len];
 		int offset = 0;
 		for(offset=0; len > MAX_LEN_BUFFER; offset+=1024, len-=1024) {
