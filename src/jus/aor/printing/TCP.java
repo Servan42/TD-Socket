@@ -18,6 +18,7 @@ import java.net.Socket;
  */
 class TCP {
 	private static final int MAX_LEN_BUFFER = 1024;
+//	private static String buffer = new String();
 
 	/**
 	 * 
@@ -94,8 +95,17 @@ class TCP {
 	 * @throws IOException
 	 */
 	static void writeData(Socket soc, InputStream fis, int len) throws IOException {
-		// -----------------------------------------------------------------------------
-		// A COMPLETER
+		// Buffer limit not implemented yet
+		OutputStream os = soc.getOutputStream();
+		DataOutputStream dos = new DataOutputStream(os);
+		DataInputStream dfis = new DataInputStream(fis);
+		byte[] b = new byte[len];
+		int size = 0;
+		while(size < len){
+			size = size + dfis.read(b, size, len-size);
+		}
+		dos.writeInt(b.length);
+		dos.write(b);
 	}
 
 	/**
@@ -106,10 +116,13 @@ class TCP {
 	 * @throws IOException
 	 */
 	static String readData(Socket soc) throws IOException {
-		// -----------------------------------------------------------------------------
-		// A COMPLETER
-		System.out.println("NOT IMPLEMENTED YET");
-		return null;
+		//Buffer limit not implemented yet
+		DataInputStream dis = new DataInputStream(soc.getInputStream());
+		int len = dis.readInt();
+		byte[] b = new byte[len];
+		dis.readFully(b, 0, len);
+		String recieved = new String(b);
+		return recieved;
 	}
 
 	/**
@@ -123,6 +136,7 @@ class TCP {
 	static void writeJobState(Socket soc, JobState jobs) throws IOException {
 		// -----------------------------------------------------------------------------
 		// A COMPLETER
+		System.out.println("NOT IMPLEMENTED YET");
 	}
 
 	/**
