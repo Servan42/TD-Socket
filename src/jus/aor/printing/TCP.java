@@ -105,7 +105,7 @@ class TCP {
 		dos.writeInt(len);
 //		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
 		while(len <= MAX_LEN_BUFFER) {
-			if(fis.available() >= MAX_LEN_BUFFER) {
+			if(dfis.available() >= MAX_LEN_BUFFER) {
 				dfis.readFully(b, offset, MAX_LEN_BUFFER);
 				// dos.writeInt(b.length);
 				dos.write(b);
