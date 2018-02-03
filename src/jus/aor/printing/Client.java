@@ -123,6 +123,7 @@ public class Client {
 				// des encours.
 				 {log.log(Level.INFO_3,"Client.QueryPrint.Processing",jk);
 				 GUI.addPrintList(jk);}
+//				 wait(2000);
 				 TCP.writeData(soc, fis, (int)f.length());
 			} else
 				log.log(Level.WARNING, "Client.QueryPrint.Failed", ret.toString());
