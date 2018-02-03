@@ -102,20 +102,11 @@ class TCP {
 		//byte[] b = new byte[MAX_LEN_BUFFER];
 		/* Sending the file kbyte per kbyte */
 		int offset = 0;
-<<<<<<< HEAD
-		dos.writeInt(len);
-System.out.println("Taille du fichier à envoyer : " + len);
-//		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
-		while(len >= MAX_LEN_BUFFER) {
-			int av = dfis.available();
-			if(av >= MAX_LEN_BUFFER) {
-=======
 		dos.writeInt(len);
 		System.out.println("Taille du fichier à envoyer : " + len);
 		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
 //		while(len <= MAX_LEN_BUFFER) {
 //			if(fis.available() >= MAX_LEN_BUFFER) {
->>>>>>> branch 'master' of https://github.com/Servan42/TD-Socket
 				System.out.println("Lecture du paquet " + offset/MAX_LEN_BUFFER);
 				byte[] b = new byte[MAX_LEN_BUFFER];
 				dfis.readFully(b, offset, MAX_LEN_BUFFER);
