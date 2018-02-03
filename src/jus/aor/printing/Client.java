@@ -121,8 +121,8 @@ public class Client {
 			if (ret == REPLY_PRINT_OK) {
 				// Dans le cas où tout est correct on ajoute le job à la liste
 				// des encours.
-				 {log.log(Level.INFO_3,"Client.QueryPrint.Processing",jk);
-				 GUI.addPrintList(jk);}
+				 log.log(Level.INFO_3,"Client.QueryPrint.Processing",jk);
+				 GUI.addPrintList(jk);
 				 TCP.writeData(soc, fis, (int)f.length());
 			} else
 				log.log(Level.WARNING, "Client.QueryPrint.Failed", ret.toString());

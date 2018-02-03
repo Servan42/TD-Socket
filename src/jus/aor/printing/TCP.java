@@ -99,15 +99,17 @@ class TCP {
 		DataInputStream dfis = new DataInputStream(fis);
 		OutputStream os = soc.getOutputStream();
 		DataOutputStream dos = new DataOutputStream(os);
-		byte[] b = new byte[MAX_LEN_BUFFER];
+		//byte[] b = new byte[MAX_LEN_BUFFER];
 		/* Sending the file kbyte per kbyte */
 		int offset = 0;
 		dos.writeInt(len);
 System.out.println("Taille du fichier à envoyer : " + len);
 //		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
-		while(len <= MAX_LEN_BUFFER) {
-			if(fis.available() >= MAX_LEN_BUFFER) {
+		while(len >= MAX_LEN_BUFFER) {
+			int av = dfis.available();
+			if(av >= MAX_LEN_BUFFER) {
 				System.out.println("Lecture du paquet " + offset/MAX_LEN_BUFFER);
+				byte[] b = new byte[MAX_LEN_BUFFER];
 				dfis.readFully(b, offset, MAX_LEN_BUFFER);
 				System.out.println("Paquet " + offset/MAX_LEN_BUFFER + " lu : ");
 				System.out.println(new String(b));
