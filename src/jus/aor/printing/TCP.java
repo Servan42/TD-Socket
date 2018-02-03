@@ -18,7 +18,7 @@ import java.net.Socket;
  */
 class TCP {
 	private static final int MAX_LEN_BUFFER = 1024;
-//	private static String buffer = new String();
+	// private static String buffer = new String();
 
 	/**
 	 * 
@@ -78,8 +78,8 @@ class TCP {
 		int length = dis.readInt();
 		byte[] b = new byte[length];
 		int size = 0;
-		while(size < length){
-			size = size + dis.read(b, size, length-size);
+		while (size < length) {
+			size = size + dis.read(b, size, length - size);
 		}
 		return new JobKey(b);
 	}
@@ -99,24 +99,31 @@ class TCP {
 		OutputStream os = soc.getOutputStream();
 		DataOutputStream dos = new DataOutputStream(os);
 		DataInputStream dfis = new DataInputStream(fis);
-		byte[] b = new byte[len];
-		int size = 0;
-		while(size < len){
-			size = size + dfis.read(b, size, len-size);
+		byte[] b = new byte[MAX_LEN_BUFFER];
+		/* Sending the file kbyte per kbyte */
+		int offset=0;
+		dos.writeInt(len);
+		for(offset=0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
+			dfis.readFully(b, offset, MAX_LEN_BUFFER);
+//			dos.writeInt(b.length);
+			dos.write(b);
 		}
-		dos.writeInt(b.length);
-		dos.write(b);
+		/* Sending the end of the file */
+		byte[] b2 = new byte[len];
+		dfis.readFully(b2, offset, len);
+//		dos.writeInt(b.length);
+		dos.write(b2);
 	}
 
 	/**
 	 * 
 	 * @param soc
-	 *            th socket
+	 *            the socket
 	 * @return string data
 	 * @throws IOException
 	 */
 	static String readData(Socket soc) throws IOException {
-		//Buffer limit not implemented yet
+		// Buffer limit not implemented yet
 		DataInputStream dis = new DataInputStream(soc.getInputStream());
 		int len = dis.readInt();
 		byte[] b = new byte[len];
