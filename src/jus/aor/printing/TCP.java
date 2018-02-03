@@ -102,7 +102,6 @@ class TCP {
 		byte[] b = new byte[MAX_LEN_BUFFER];
 		/* Sending the file kbyte per kbyte */
 		dos.writeInt(len);
-		System.out.println("Taille du fichier à envoyer : " + len);
 		for (; len > MAX_LEN_BUFFER; len -= MAX_LEN_BUFFER) {
 				dfis.readFully(b, 0, MAX_LEN_BUFFER);
 				dos.write(b);
