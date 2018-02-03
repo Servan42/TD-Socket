@@ -37,7 +37,6 @@ public class Slave extends Thread {
 				if (protocole == QUERY_PRINT) {
 					TCP.writeProtocole(client, REPLY_PRINT_OK);
 					TCP.writeJobKey(client, jk);
-					TCP.readData(client);
 				} else {
 					TCP.writeProtocole(client, REPLY_UNKNOWN_NOTIFICATION);
 					TCP.writeJobKey(client, jk);
