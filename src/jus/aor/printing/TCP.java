@@ -102,12 +102,20 @@ class TCP {
 		//byte[] b = new byte[MAX_LEN_BUFFER];
 		/* Sending the file kbyte per kbyte */
 		int offset = 0;
+<<<<<<< HEAD
 		dos.writeInt(len);
 System.out.println("Taille du fichier à envoyer : " + len);
 //		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
 		while(len >= MAX_LEN_BUFFER) {
 			int av = dfis.available();
 			if(av >= MAX_LEN_BUFFER) {
+=======
+		dos.writeInt(len);
+		System.out.println("Taille du fichier à envoyer : " + len);
+		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
+//		while(len <= MAX_LEN_BUFFER) {
+//			if(fis.available() >= MAX_LEN_BUFFER) {
+>>>>>>> branch 'master' of https://github.com/Servan42/TD-Socket
 				System.out.println("Lecture du paquet " + offset/MAX_LEN_BUFFER);
 				byte[] b = new byte[MAX_LEN_BUFFER];
 				dfis.readFully(b, offset, MAX_LEN_BUFFER);
@@ -115,14 +123,13 @@ System.out.println("Taille du fichier à envoyer : " + len);
 				System.out.println(new String(b));
 				// dos.writeInt(b.length);
 				dos.write(b);
-				offset += MAX_LEN_BUFFER;
-				len -= MAX_LEN_BUFFER;
-			}
+//				offset += MAX_LEN_BUFFER;
+//				len -= MAX_LEN_BUFFER;
+//			}
 		}
 
 //		}
 		/* Sending the end of the file */
-		while(fis.available() < len);
 		byte[] b2 = new byte[len];
 		dfis.readFully(b2, offset, len);
 		// dos.writeInt(b.length);
@@ -140,8 +147,16 @@ System.out.println("Taille du fichier à envoyer : " + len);
 		// Buffer limit not implemented yet
 		DataInputStream dis = new DataInputStream(soc.getInputStream());
 		int len = dis.readInt();
+		System.out.println("Taille du fichier à recevoir : " + len);
 		byte[] b = new byte[len];
-		dis.readFully(b, 0, len);
+		int offset = 0;
+		for(offset=0; len > MAX_LEN_BUFFER; offset+=1024, len-=1024) {
+			System.out.println("Lecture du paquet " + offset/MAX_LEN_BUFFER);
+			dis.readFully(b, offset, MAX_LEN_BUFFER);
+			System.out.println("Paquet " + offset/MAX_LEN_BUFFER + " lu : ");
+			System.out.println(new String(b));
+		}
+		dis.readFully(b, offset, len);
 		String recieved = new String(b);
 		return recieved;
 	}
