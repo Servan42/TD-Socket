@@ -26,6 +26,10 @@ public class Server {
 	protected int port = 3000;
 	/** le nombre d'esclaves maximum du pool */
 	protected int poolSize = 10;
+	/** le pool d'esclaves */
+	protected PoolSlave[] pool;
+	/** le buffer de communication avec les esclaves */
+	protected Buffer<Socket> buff;
 	/** le contrôle d'arret du serveur */
 	protected boolean alive = false;
 	/** le master server TCP socket */
@@ -44,6 +48,13 @@ public class Server {
 		} catch (IOException e) {
 			log.log(Level.SEVERE, "Server.Creation.Error", e.getMessage());
 		}
+		buff = new Buffer<Socket>(backlog);
+		pool = new PoolSlave[poolSize];
+		for(int i=0; i<poolSize; i++) {
+			pool[i] = new PoolSlave(buff);
+			pool[i].setDaemon(true);
+			pool[i].start();
+		}
 	}
 
 	/**
@@ -61,7 +72,7 @@ public class Server {
 			while (alive) {
 				log.log(Level.INFO, "Server.TCP.Waiting");
 				soc = serverTCPSoc.accept();
-				new Slave(soc).start();
+				buff.put(soc);
 			}
 			log.log(Level.INFO_1, "Server.TCP.Stopped");
 			serverTCPSoc.close();
