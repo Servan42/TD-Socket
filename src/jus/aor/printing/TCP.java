@@ -96,18 +96,27 @@ class TCP {
 	 */
 	static void writeData(Socket soc, InputStream fis, int len) throws IOException {
 		// Buffer limit not implemented yet
+		DataInputStream dfis = new DataInputStream(fis);
 		OutputStream os = soc.getOutputStream();
 		DataOutputStream dos = new DataOutputStream(os);
-		DataInputStream dfis = new DataInputStream(fis);
 		byte[] b = new byte[MAX_LEN_BUFFER];
 		/* Sending the file kbyte per kbyte */
 		int offset = 0;
 		dos.writeInt(len);
+		System.out.println("Taille du fichier à envoyer : " + len);
+		
+		
+		
 		for (offset = 0; len > MAX_LEN_BUFFER; offset += MAX_LEN_BUFFER, len -= MAX_LEN_BUFFER) {
+//			DataInputStream dfis = new DataInputStream(fis);
+			System.out.println("Lecture du paquet " + offset/MAX_LEN_BUFFER);
 			dfis.readFully(b, offset, MAX_LEN_BUFFER);
+			System.out.println("Paquet " + offset/MAX_LEN_BUFFER + " Lu : ");
+			System.out.println(new String(b));
 			// dos.writeInt(b.length);
 			dos.write(b);
 		}
+//		DataInputStream dfis = new DataInputStream(fis);
 		/* Sending the end of the file */
 		byte[] b2 = new byte[len];
 		dfis.readFully(b2, offset, len);
