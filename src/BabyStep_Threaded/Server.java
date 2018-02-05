@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Représentation d'un serveur
+ * 
+ * @author Servan CHARLOT
+ */
 public class Server {
 
 	int port;
@@ -11,7 +16,7 @@ public class Server {
 	ServerSocket client;
 	static int clientnumber;
 
-	Server() {
+	public Server() {
 		port = 1234;
 		clientnumber = 0;
 		try {
@@ -22,6 +27,9 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Envoie un objet au serveur
+	 */
 	public void lancer() {
 		System.out.println("Server starded (object)");
 		while (true) {

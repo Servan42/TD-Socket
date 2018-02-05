@@ -8,17 +8,25 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Date;
 
+/**
+ * Representation d'un client
+ * 
+ * @author Servan CHARLOT
+ */
 public class Client {
 
 	int serverPort;
 	String serverHost;
 	Socket server;
 
-	Client() {
+	public Client() {
 		serverPort = 1234;
 		serverHost = "127.0.0.1";
 	}
 
+	/**
+	 * Recois un tableau de bytes du serveur.
+	 */
 	public void lancer() {
 		try {
 			// Client connects to the server
@@ -57,6 +65,9 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Recois un objet du serveur.
+	 */
 	public void lancerObject() {
 		try {
 			// Client connects to the server

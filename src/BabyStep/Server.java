@@ -8,13 +8,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 
+/**
+ * Représentation d'un serveur
+ * 
+ * @author Servan CHARLOT
+ */
 public class Server {
 
 	int port;
 	ServerSocket server;
 	ServerSocket client;
 
-	Server() {
+	public Server() {
 		port = 1234;
 		try {
 			// Create a server socket associated with port 1234
@@ -24,6 +29,9 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Envoie une un tableau de bytes au client.
+	 */
 	public void lancer() {
 		System.out.println("Server starded");
 		while (true) {
@@ -60,6 +68,9 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Envoie un objet au client.
+	 */
 	public void lancerObject() {
 		System.out.println("Server starded (object)");
 		while (true) {

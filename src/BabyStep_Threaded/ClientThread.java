@@ -6,14 +6,26 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Date;
 
+/**
+ * Thread qui traite les requetes pour le serveur.
+ * 
+ * @author servan
+ */
 public class ClientThread extends Thread {
 
 	Socket client;
 
-	ClientThread(Socket client) {
+	/**
+	 * Constructeur de ClientThread.
+	 * @param client La socket donnée par le serveur après acceptation de la connection.
+	 */
+	public ClientThread(Socket client) {
 		this.client = client;
 	}
 
+	/**
+	 * Envoie un objet au client.
+	 */
 	public void run() {
 
 		// A client connected
