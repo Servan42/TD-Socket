@@ -14,7 +14,7 @@ import static jus.aor.printing.Notification.*;
 /**
  * Représentation du serveur d'impression.
  * 
- * @author Morat
+ * @author Morat Chanet Charlot
  */
 public class Server {
 	/** 1 second timeout for waiting replies */

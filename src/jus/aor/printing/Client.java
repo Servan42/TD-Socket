@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 /**
  * Représentation du Client du serveur d'impression.
  * 
- * @author Morat
+ * @author Morat Chanet Charlot
  */
 public class Client {
 	/** 1 second timeout for waiting replies */

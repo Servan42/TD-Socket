@@ -14,7 +14,7 @@ import java.net.Socket;
  * Classe de service fournissant toutes les interactions (read, write) en mode
  * TCP.
  * 
- * @author Morat
+ * @author Morat Chanet Charlot
  */
 class TCP {
 	private static final int MAX_LEN_BUFFER = 1024;

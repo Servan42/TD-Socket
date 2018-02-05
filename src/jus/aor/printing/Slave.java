@@ -13,15 +13,29 @@ import jus.aor.printing.JobKey;
 import jus.aor.printing.Level;
 import jus.aor.printing.Notification;
 
+
+/**
+ * Thread qui traite les demandes de connection du serveur.
+ * 
+ * @author Chanet Charlot
+ */
 public class Slave extends Thread {
 
 	Socket client;
 	Logger log = Logger.getLogger("Jus.Aor.Printing.Server", "jus.aor.printing.Server");
 
+	/**
+	 * Constructeur de slave.
+	 * @param client La socket donnée par le serveur après acceptation de la connection.
+	 */
 	public Slave(Socket client) {
 		this.client = client;
 	}
 
+	/**
+	 * Methode qui recupère le protocole et la jobkey de la requete 
+	 * et renvoie une notification en fonction.
+	 */
 	public void run() {
 		try {
 			try {

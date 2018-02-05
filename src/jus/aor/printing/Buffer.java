@@ -9,8 +9,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * Tableau de garde-action 
  *	Methode | Garde 					| Action
  *	--------|---------------------------|------------------
- *	get 	| buffer.length > 0 		| return message, vider cette case du buffer
- *	put 	| buffer.length < buffsize 	| remplir une case du buffer
+ *	get 	| buffer.get(toGet) != null | return message, vider cette case du buffer
+ *	put 	| buffer.get(toPut) == null | remplir une case du buffer
  */
 
 /**
@@ -21,16 +21,17 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Buffer<Content> {
 
-		private int buffSize;
-		private ArrayList<Content> buffer;
-		private int toGet;
-		private int toPut;
+		private int buffSize; // Taille du buffer
+		private ArrayList<Content> buffer; // Structure de donnée du buffer
+		private int toGet; // Indice ou l'on doit recuperer la donnée
+		private int toPut; // Indice ou l'on doit ecrire la donnée
+		// Ci dessous : Variables necessaires pour creer la section critique.
 		private final Lock lock = new ReentrantLock();
 		private final Condition notFull = lock.newCondition();
 		private final Condition notEmpty = lock.newCondition();
 		
 		/**
-		 * Constructeur de ProdCons
+		 * Constructeur de Buffer
 		 * 
 		 * @param size
 		 *            Nombre de places à allouer dans le buffer.
@@ -61,9 +62,7 @@ public class Buffer<Content> {
 		 * Methode permettant au Consommateur de recuperer un message dans le
 		 * tampon. Recupère le message le plus ancien du tampon, et met la case du
 		 * tampon à <code>null</code> après recuperation
-		 * 
-		 * @param arg0
-		 *            Consommateur qui demande le message
+		 *
 		 * @return Message sorti du tampon.
 		 */
 		public Content get() throws Exception, InterruptedException {
@@ -93,8 +92,6 @@ public class Buffer<Content> {
 		 * Methode permettant au Producteur de poser un message dans le tampon, à un
 		 * emplacement vide (=null), et seulement si le tampon n'est pas plein.
 		 * 
-		 * @param arg0
-		 *            Producteur qui pose le message
 		 * @param arg1
 		 *            Message à deposer dans le tampon
 		 */

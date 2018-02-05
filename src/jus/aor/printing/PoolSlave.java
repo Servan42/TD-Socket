@@ -13,16 +13,30 @@ import jus.aor.printing.JobKey;
 import jus.aor.printing.Level;
 import jus.aor.printing.Notification;
 
+/**
+ * thread qui recupère les socket dans le buffer et les traitent. 
+ * 
+ * @author Chanet Charlot
+ */
 public class PoolSlave extends Thread {
 
 	Socket client;
 	Buffer<Socket> buff;
 	Logger log = Logger.getLogger("Jus.Aor.Printing.Server", "jus.aor.printing.Server");
 
+	/**
+	 * Constructeur de PoolSlave.
+	 * @param buff Buffer qui contient des sockets. Elle y on été placés par le serveur après accepttio de connection.
+	 */
 	public PoolSlave(Buffer<Socket> buff) {
 		this.buff = buff;
 	}
 
+	/**
+	 * Méthode qui recupère une socket dans le buffer puis 
+	 * recupère le protocole et la jobkey dans la socket,
+	 * et renvoie une notification en fonction.
+	 */
 	public void run() {
 		while(true) {
 			try {
