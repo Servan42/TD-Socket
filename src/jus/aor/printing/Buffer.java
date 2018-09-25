@@ -51,8 +51,11 @@ public class Buffer<Content> {
 		 */
 		public int enAttente() {
 			int ret;
+			
 			if(toGet < toPut)
 				ret = toPut-toGet;
+			else if (toGet == toPut && buffer.get(toGet) == null)
+				ret = 0;
 			else
 				ret = buffSize-toGet+toPut;
 			return ret;
